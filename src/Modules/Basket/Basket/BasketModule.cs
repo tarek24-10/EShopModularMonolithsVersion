@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Basket
@@ -9,6 +10,11 @@ namespace Basket
             IConfiguration configuration)
         {
             return service;
+        }
+
+        public static IApplicationBuilder UseBasketModule(this IApplicationBuilder app)
+        {
+            return app;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
 
 namespace Ordering
 {
@@ -9,6 +10,11 @@ namespace Ordering
             IConfiguration configuration)
         {
             return service;
+        }
+
+        public static IApplicationBuilder UseOrderingModule(this IApplicationBuilder app)
+        {
+            return app;
         }
     }
 }
