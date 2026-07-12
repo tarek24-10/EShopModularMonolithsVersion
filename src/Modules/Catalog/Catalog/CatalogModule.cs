@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Data.Interceptors;
 
 
 namespace Catalog
@@ -10,8 +11,10 @@ namespace Catalog
         public static IServiceCollection AddCatalogModule(this IServiceCollection service, 
             IConfiguration configuration)
         {
-            service.AddDbContext<CatalogDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("Database")));
+            service.AddDbContext<CatalogDbContext>(options => {
+                options.UseNpgsql(configuration.GetConnectionString("Database"));
+                options.AddInterceptors(new AuditableEntityInterceptor());
+            });
 
             service.AddScoped<IDataSeeder, CatalogDataSeeder>();
             return service;
