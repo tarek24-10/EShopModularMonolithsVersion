@@ -9,6 +9,8 @@ namespace Catalog
         public static IServiceCollection AddCatalogModule(this IServiceCollection service, 
             IConfiguration configuration)
         {
+            service.AddDbContext<CatalogDbContext>(options =>
+                options.UseNpgsql(configuration.GetConnectionString("Database")));
             return service;
         }
 
