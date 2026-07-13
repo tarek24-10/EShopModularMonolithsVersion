@@ -13,11 +13,11 @@
                 var response = result.Adapt<CreateProductResponse>();
                 return Results.Created($"/products/{response.Id}", response);
             })
-                .WithName("CreateProduct")
+                .WithName("Create Product")
                 .Produces<CreateProductResponse>(StatusCodes.Status201Created)
                 .ProducesProblem(StatusCodes.Status400BadRequest)
-                .WithSummary("CreateProduct")
-                .WithDescription("CreateProduct");
+                .WithSummary("Create Product")
+                .WithDescription("Create Product");
         }
     }
 }
