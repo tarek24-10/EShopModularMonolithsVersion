@@ -1,14 +1,27 @@
-﻿using Shared.CQRS;
-
-namespace Catalog.Products.Features.Create_Product
+﻿namespace Catalog.Products.Features.Create_Product
 {
-    public record CreateProductCommand(string Name, string Description, decimal Price, string ImageFile, List<string> Category) : ICommand<CreateProductResult>;
+    public record CreateProductCommand(ProductDTO Product) : ICommand<CreateProductResult>;
     public record CreateProductResult(Guid Id);
-    public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
+    public class CreateProductCommandHandler(CatalogDbContext dbContext) : ICommandHandler<CreateProductCommand, CreateProductResult>
     {
-        public Task<CreateProductResult> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var product = CreateNewProduct(command.Product);
+            dbContext.Products.Add(product);
+            await dbContext.SaveChangesAsync(cancellationToken);
+            return new CreateProductResult(product.Id);
+        }
+
+        private Product CreateNewProduct(ProductDTO product)
+        {
+            return Product.Create(
+                Guid.NewGuid(),
+                product.Name,
+                product.Description,
+                product.Price,
+                product.ImageFile,
+                product.Category
+            );
         }
     }
 }
