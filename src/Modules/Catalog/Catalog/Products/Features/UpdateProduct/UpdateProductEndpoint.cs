@@ -19,6 +19,5 @@
                 .WithSummary("Update Product")
                 .WithDescription("Update Product");
         }
-    {
     }
 }
