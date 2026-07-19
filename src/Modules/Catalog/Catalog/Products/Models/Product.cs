@@ -38,12 +38,12 @@
 
             Name = name;
             Description = description;
-            Price = price;
             ImageFile = imageFile;
             Category = category;
 
             if(Price != price)
             {
+                Price = price;
                 AddDomainEvent(new ProductPriceChangedEvent(this));
             }
         }
