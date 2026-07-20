@@ -18,7 +18,7 @@
             var product = await dbContext.Products.FindAsync([command.ProductId], cancellationToken: cancellationToken);
             if (product is null)
             {
-                throw new Exception($"Product with ID {command.ProductId} not found.");
+                throw new ProductNotFoundException(command.ProductId);
             }
 
             dbContext.Products.Remove(product);

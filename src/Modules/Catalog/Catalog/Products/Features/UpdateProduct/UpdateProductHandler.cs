@@ -21,7 +21,7 @@
             var product = await dbContext.Products.FindAsync([command.Product.Id], cancellationToken: cancellationToken);
             if (product is null)
             {
-                throw new Exception($"Product with ID {command.Product.Id} not found.");
+                throw new ProductNotFoundException(command.Product.Id);
             }
 
             UpdateProductWithNewValues(product, command.Product);
