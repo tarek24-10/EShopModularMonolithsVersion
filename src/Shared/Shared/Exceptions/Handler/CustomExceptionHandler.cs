@@ -6,7 +6,7 @@ using FluentValidation;
 
 namespace Shared.Exceptions.Handler
 {
-    internal class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger) : IExceptionHandler
+    public class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger) : IExceptionHandler
     {
         public async ValueTask<bool> TryHandleAsync(HttpContext context, Exception exception, CancellationToken cancellationToken)
         {
