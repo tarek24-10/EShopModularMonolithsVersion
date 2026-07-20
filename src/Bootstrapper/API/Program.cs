@@ -4,6 +4,10 @@ using static System.Net.Mime.MediaTypeNames;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure Serilog with configuration and a console fallback so logs are visible
+builder.Host.UseSerilog((context, services, config) =>
+    config.ReadFrom.Configuration(context.Configuration));
+
 //builder.Services.AddCarter(configurator: config => 
 //{
 //    var catalogModules = typeof(CatalogModule).Assembly.GetTypes()
@@ -28,11 +32,15 @@ var app = builder.Build();
 
 app.MapCarter();
 
+app.UseSerilogRequestLogging();
+
+app.UseExceptionHandler(options => { });
+
+
 app.UseCatalogModule()
    .UseOrderingModule()
    .UseBasketModule();
 
-app.UseExceptionHandler(options => { });
 
 //app.UseExceptionHandler(exceptionHandlerApp =>
 //{
