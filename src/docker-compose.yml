@@ -2,5 +2,9 @@ services:
   eshopdb:
     image: postgres:17
 
+  Seq:
+    image: datalust/seq:latest
+
+
 volumes:
   postgres_eshopdb:
