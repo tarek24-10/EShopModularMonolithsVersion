@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Behaviours;
 using Shared.Data.Interceptors;
 
 
@@ -12,7 +13,14 @@ namespace Catalog
         public static IServiceCollection AddCatalogModule(this IServiceCollection service, 
             IConfiguration configuration)
         {
-            service.AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            service.AddMediatR(config => {
+                config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+                config.AddOpenBehavior(typeof(VaildationBehaviour<,>));
+            }
+            );
+
+            service.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
             service.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
             service.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
             service.AddDbContext<CatalogDbContext>((sp, options) => {
