@@ -1,0 +1,20 @@
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace Basket.Data.Configurations
+{
+    public class ShoppingCartConfiguration : IEntityTypeConfiguration<ShoppingCart>
+    {
+        public void Configure(EntityTypeBuilder<ShoppingCart> builder)
+        {
+            builder.HasKey(e => e.Id);
+
+            builder.HasIndex(e => e.Id).IsUnique();
+
+            builder.Property(e => e.UserName).IsRequired().HasMaxLength(100);
+
+            builder.HasMany(e => e.Items)
+                .WithOne()
+                .HasForeignKey(si => si.ShoppingCartId);
+        }
+    }
+}
