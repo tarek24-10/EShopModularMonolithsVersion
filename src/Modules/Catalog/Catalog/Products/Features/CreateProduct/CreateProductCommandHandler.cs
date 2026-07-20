@@ -14,9 +14,9 @@
         }
     }
 
-    public class CreateProductCommandHandler(CatalogDbContext dbContext,
+    public class CreateProductCommandHandler(CatalogDbContext dbContext//,
         //IValidator<CreateProductCommand> validator,
-        ILogger<CreateProductCommandHandler> logger
+        //ILogger<CreateProductCommandHandler> logger
         ) : ICommandHandler<CreateProductCommand, CreateProductResult>
     {
         public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
@@ -27,7 +27,7 @@
             //    throw new ValidationException(errors.FirstOrDefault());
             //}
 
-            logger.LogInformation("CreateProductCommandHandler called with {@command}", command);
+            //logger.LogInformation("CreateProductCommandHandler called with {@command}", command);
 
             var product = CreateNewProduct(command.Product);
             dbContext.Products.Add(product);

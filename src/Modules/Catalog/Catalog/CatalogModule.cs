@@ -16,6 +16,7 @@ namespace Catalog
             service.AddMediatR(config => {
                 config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
                 config.AddOpenBehavior(typeof(VaildationBehaviour<,>));
+                config.AddOpenBehavior(typeof(LoggingBehaviour<,>));
             }
             );
 
