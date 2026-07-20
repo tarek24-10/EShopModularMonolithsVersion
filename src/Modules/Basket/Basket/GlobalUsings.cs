@@ -6,6 +6,8 @@ global using Basket.Data;
 global using Basket.Basket.DTOs;
 global using FluentValidation;
 global using Shared.CQRS;
+global using Basket.Basket.Exceptions;
+
 
 
 

@@ -12,9 +12,9 @@
     }
     public class CreateBasketHandler(BasketDbContext dbContext) : ICommandHandler<CreateBasketCommand, CreateBasketResult>
     {
-        public async Task<CreateBasketResult> Handle(CreateBasketCommand request, CancellationToken cancellationToken)
+        public async Task<CreateBasketResult> Handle(CreateBasketCommand command, CancellationToken cancellationToken)
         {
-            var shoppingCart = CreateNewBasket(request.ShoppingCart);
+            var shoppingCart = CreateNewBasket(command.ShoppingCart);
 
             dbContext.ShoppingCarts.Add(shoppingCart);
             await dbContext.SaveChangesAsync(cancellationToken);
