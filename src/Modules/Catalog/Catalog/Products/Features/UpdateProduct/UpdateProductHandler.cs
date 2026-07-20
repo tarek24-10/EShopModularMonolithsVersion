@@ -2,6 +2,18 @@
 {
     public record UpdateProductCommand(ProductDTO Product) : ICommand<UpdateProductResult>;
     public record UpdateProductResult(bool IsSuccess);
+
+    public class UpdateProductCommandValidator : AbstractValidator<UpdateProductCommand>
+    {
+        public UpdateProductCommandValidator()
+        {
+            RuleFor(x => x.Product.Id).NotEmpty().WithMessage("ID is required.");
+            RuleFor(x => x.Product.Name).NotEmpty().WithMessage("Name is required.");
+            RuleFor(x => x.Product.Price).GreaterThan(0).WithMessage("Price must be greater than zero.");
+            RuleFor(x => x.Product.ImageFile).NotEmpty().WithMessage("Image file is required.");
+            RuleFor(x => x.Product.Category).NotEmpty().WithMessage("Category is required.");
+        }
+    }
     public class UpdateProductHandler(CatalogDbContext dbContext) : ICommandHandler<UpdateProductCommand, UpdateProductResult>
     {
         public async Task<UpdateProductResult> Handle(UpdateProductCommand command, CancellationToken cancellationToken)
