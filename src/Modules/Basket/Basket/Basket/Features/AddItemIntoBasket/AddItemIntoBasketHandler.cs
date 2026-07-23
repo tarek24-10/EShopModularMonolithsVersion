@@ -19,7 +19,7 @@
     {
         public async Task<AddItemIntoBasketResult> Handle(AddItemIntoBasketCommand command, CancellationToken cancellationToken)
         {
-            var shoppingCart = await dbContext.ShoppingCarts.AsNoTracking()
+            var shoppingCart = await dbContext.ShoppingCarts
                 .Include(b => b.Items)
                 .SingleOrDefaultAsync(b => b.UserName == command.UserName, cancellationToken);
 
