@@ -17,9 +17,14 @@ builder.Host.UseSerilog((context, services, config) =>
 //    config.WithModules(catalogModules);
 //});
 
-builder.Services.AddCarterWithAssemblies(typeof(CatalogModule).Assembly //,
+builder.Services.AddCarterWithAssemblies(typeof(CatalogModule).Assembly,
+    //typeof(OrderingModule).Assembly//,
+    typeof(BasketModule).Assembly
+    );
+
+builder.Services.AddMediatorWithAssemblies(typeof(CatalogModule).Assembly,
     //typeof(OrderingModule).Assembly,
-    //typeof(BasketModule).Assembly
+    typeof(BasketModule).Assembly
     );
 
 builder.Services.AddCatalogModule(builder.Configuration)

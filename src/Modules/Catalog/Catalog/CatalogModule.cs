@@ -13,14 +13,15 @@ namespace Catalog
         public static IServiceCollection AddCatalogModule(this IServiceCollection service, 
             IConfiguration configuration)
         {
-            service.AddMediatR(config => {
-                config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-                config.AddOpenBehavior(typeof(VaildationBehaviour<,>));
-                config.AddOpenBehavior(typeof(LoggingBehaviour<,>));
-            }
-            );
+            //service.AddMediatR(config =>
+            //{
+            //    config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            //    config.AddOpenBehavior(typeof(VaildationBehaviour<,>));
+            //    config.AddOpenBehavior(typeof(LoggingBehaviour<,>));
+            //}
+            //);
 
-            service.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            //service.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             service.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
             service.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
