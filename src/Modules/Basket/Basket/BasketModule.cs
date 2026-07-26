@@ -1,6 +1,7 @@
 ﻿using Basket.Data.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Data;
@@ -14,6 +15,14 @@ namespace Basket
             IConfiguration configuration)
         {
             service.AddScoped<IBasketRepository, BasketRepository>();
+            //service.AddScoped<IBasketRepository>(provider =>
+            //    new CachedBasketRepository(
+            //        provider.GetRequiredService<BasketRepository>(),
+            //        provider.GetRequiredService<IDistributedCache>()
+            //    )
+            //);
+            service.Decorate<IBasketRepository, CachedBasketRepository>();
+
 
             service.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
             service.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
