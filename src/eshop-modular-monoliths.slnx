@@ -7,6 +7,7 @@
     <Project Path="Modules/Basket/Basket/Basket.csproj" Id="6631b37b-f3f2-46af-9ab6-53c64e043d85" />
   </Folder>
   <Folder Name="/Modules/Catalog/">
+    <Project Path="Modules/Catalog/Catalog.Contracts/Catalog.Contracts.csproj" Id="4a3b67ba-283f-43b4-8c95-257ff251cb9f" />
     <Project Path="Modules/Catalog/Catalog/Catalog.csproj" Id="9d35d4c3-9d1f-4475-9bca-a6c2c2e737f6" />
   </Folder>
   <Folder Name="/Modules/Ordering/">
