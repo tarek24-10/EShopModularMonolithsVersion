@@ -15,18 +15,20 @@
         }
     }
 
-    public class AddItemIntoBasketHandler(BasketDbContext dbContext) : ICommandHandler<AddItemIntoBasketCommand, AddItemIntoBasketResult>
+    public class AddItemIntoBasketHandler(IBasketRepository repository) : ICommandHandler<AddItemIntoBasketCommand, AddItemIntoBasketResult>
     {
         public async Task<AddItemIntoBasketResult> Handle(AddItemIntoBasketCommand command, CancellationToken cancellationToken)
         {
-            var shoppingCart = await dbContext.ShoppingCarts
-                .Include(b => b.Items)
-                .SingleOrDefaultAsync(b => b.UserName == command.UserName, cancellationToken);
+            //var shoppingCart = await dbContext.ShoppingCarts
+            //    .Include(b => b.Items)
+            //    .SingleOrDefaultAsync(b => b.UserName == command.UserName, cancellationToken);
 
-            if (shoppingCart == null)
-            {
-                throw new BasketNotFoundException(command.UserName);
-            }
+            //if (shoppingCart == null)
+            //{
+            //    throw new BasketNotFoundException(command.UserName);
+            //}
+
+            var shoppingCart = await repository.GetBasket(command.UserName, false, cancellationToken);
 
             shoppingCart.AddItem(command.ShoppingCartItem.ProductId,
                                  command.ShoppingCartItem.Quantity, 
@@ -34,7 +36,7 @@
                                  command.ShoppingCartItem.Price,
                                  command.ShoppingCartItem.ProductName
                                  );
-            await dbContext.SaveChangesAsync(cancellationToken);
+            await repository.SaveChangesAsync(cancellationToken);
 
             return new AddItemIntoBasketResult(shoppingCart.Id);
         }
