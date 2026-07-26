@@ -15,8 +15,8 @@ namespace Basket.Data.JsonCoverters
             var productId = rootElement.GetProperty("productId").GetGuid();
             var quantity = rootElement.GetProperty("quantity").GetInt32();
             var price = rootElement.GetProperty("price").GetDecimal();
-            var color = rootElement.GetProperty("color").GetString();
-            var productName = rootElement.GetProperty("productName").GetString();
+            var color = rootElement.GetProperty("color").GetString()!;
+            var productName = rootElement.GetProperty("productName").GetString()!;
 
             return new ShoppingCartItem(id, shoppingCartId, productId, quantity, color, price, productName);
         }
