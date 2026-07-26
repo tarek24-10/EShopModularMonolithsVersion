@@ -27,6 +27,11 @@ builder.Services.AddMediatorWithAssemblies(typeof(CatalogModule).Assembly,
     typeof(BasketModule).Assembly
     );
 
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
+
 builder.Services.AddCatalogModule(builder.Configuration)
                 .AddOrderingModule(builder.Configuration)
                 .AddBasketModule(builder.Configuration);
