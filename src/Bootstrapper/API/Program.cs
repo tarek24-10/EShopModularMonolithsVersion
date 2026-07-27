@@ -38,7 +38,7 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
 });
 
-builder.Services.AddMassTransitWithAssemblies(catalogAssembly,
+builder.Services.AddMassTransitWithAssemblies(builder.Configuration,catalogAssembly,
     //typeof(OrderingModule).Assembly,
     basketAssembly);
 
