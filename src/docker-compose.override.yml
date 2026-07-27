@@ -25,4 +25,15 @@ services:
       - "5341:5341"
       - "9091:80"
   
+  messagebus:
+    container_name: messagebus
+    hostname: eshop-mq
+    environment:
+      - RABBITMQ_DEFAULT-USER=guest
+      - RABBITMQ_DEFAULT-PASS=guest
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  
   
