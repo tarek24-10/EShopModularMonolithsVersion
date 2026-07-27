@@ -4,6 +4,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Configure Serilog with configuration and a console fallback so logs are visible
 builder.Host.UseSerilog((context, services, config) =>
     config.ReadFrom.Configuration(context.Configuration));
@@ -17,20 +18,31 @@ builder.Host.UseSerilog((context, services, config) =>
 //    config.WithModules(catalogModules);
 //});
 
-builder.Services.AddCarterWithAssemblies(typeof(CatalogModule).Assembly,
+//** Common Services
+
+var catalogAssembly = typeof(CatalogModule).Assembly;
+var basketAssembly = typeof(BasketModule).Assembly;
+
+builder.Services.AddCarterWithAssemblies(catalogAssembly,
     //typeof(OrderingModule).Assembly//,
-    typeof(BasketModule).Assembly
+    basketAssembly
     );
 
-builder.Services.AddMediatorWithAssemblies(typeof(CatalogModule).Assembly,
+builder.Services.AddMediatorWithAssemblies(catalogAssembly,
     //typeof(OrderingModule).Assembly,
-    typeof(BasketModule).Assembly
+    basketAssembly
     );
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
 });
+
+builder.Services.AddMassTransitWithAssemblies(catalogAssembly,
+    //typeof(OrderingModule).Assembly,
+    basketAssembly);
+
+//** Module sevices
 
 builder.Services.AddCatalogModule(builder.Configuration)
                 .AddOrderingModule(builder.Configuration)
