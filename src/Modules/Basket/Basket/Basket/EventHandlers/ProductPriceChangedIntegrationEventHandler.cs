@@ -1,16 +1,26 @@
-﻿using MassTransit;
+﻿using Basket.Basket.Features.UpdateItemPriceInBasket;
+using MassTransit;
 using Microsoft.Extensions.Logging;
 using Shared.Messaging.Events;
 
 namespace Basket.Basket.EventHandlers
 {
-    public class ProductPriceChangedIntegrationEventHandler(ILogger logger, ISender sender)
+    public class ProductPriceChangedIntegrationEventHandler(ILogger<ProductPriceChangedIntegrationEventHandler> logger, ISender sender)
         : IConsumer<ProductPriceChangedIntegrationEvent>
     {
-        public Task Consume(ConsumeContext<ProductPriceChangedIntegrationEvent> context)
+        public async Task Consume(ConsumeContext<ProductPriceChangedIntegrationEvent> context)
         {
             logger.LogInformation("Integration Event handled: {IntegrationEvent}", context.Message.GetType().Name);
-            return Task.CompletedTask;
+
+            var result = await sender.Send(new UpdateItemPriceInBasketCommand(context.Message.ProductId,
+                                                                        context.Message.Price));
+
+            if(!result.IsSuccess)
+            {
+                logger.LogInformation("Error updating price in basket for product id: {ProductId}", context.Message.ProductId);
+            }
+
+            logger.LogInformation("Price for product id: {ProductId} updated in basket", context.Message.ProductId);
         }
     }
 }
