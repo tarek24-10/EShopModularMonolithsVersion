@@ -14,7 +14,8 @@
             .Produces<GetBasketResponse>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithDescription("Get Basket")
-            .WithSummary("Get Basket");
+            .WithSummary("Get Basket")
+            .RequireAuthorization(); 
         }
     }
 }

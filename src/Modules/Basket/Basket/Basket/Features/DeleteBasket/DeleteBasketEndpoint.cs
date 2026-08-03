@@ -14,7 +14,8 @@
             .Produces<DeleteBasketResponse>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithDescription("Delete Basket")
-            .WithSummary("Delete Basket");
+            .WithSummary("Delete Basket")
+            .RequireAuthorization(); 
         }
     }
 }

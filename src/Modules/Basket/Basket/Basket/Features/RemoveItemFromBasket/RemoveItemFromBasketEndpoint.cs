@@ -14,7 +14,8 @@
             .Produces<RemoveItemFromBasketResponse>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithDescription("Remove Item From Basket")
-            .WithSummary("Remove Item From Basket");
+            .WithSummary("Remove Item From Basket")
+            .RequireAuthorization(); 
         }
     }
 }

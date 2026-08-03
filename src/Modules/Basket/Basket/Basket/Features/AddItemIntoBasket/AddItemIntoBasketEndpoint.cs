@@ -16,7 +16,8 @@
             .Produces<AddItemIntoBasketResponse>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithDescription("Add Item Into Basket")
-            .WithSummary("Add Item Into Basket");
+            .WithSummary("Add Item Into Basket")
+            .RequireAuthorization(); 
         }
     }
 }
