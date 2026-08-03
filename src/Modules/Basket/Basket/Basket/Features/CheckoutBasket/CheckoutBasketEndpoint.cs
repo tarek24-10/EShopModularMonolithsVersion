@@ -1,0 +1,27 @@
+﻿namespace Basket.Basket.Features.CheckoutBasket
+{
+    public record CheckoutBasketRequest(BasketCheckoutDTO BasketCheckout);
+    public record CheckoutBasketResponce(bool IsSuccess);
+    public class CheckoutBasketEndpoint : ICarterModule
+    {
+        public void AddRoutes(IEndpointRouteBuilder app)
+        {
+            app.MapPost("/basket/checkout", async (CheckoutBasketRequest request, ISender sender) =>
+            {
+                var command = request.Adapt<CheckoutBasketCommand>();
+                
+                var result = await sender.Send(command);
+
+                var responce = result.adapt<CheckoutBasketResponce>();
+
+                return Results.Ok(responce);
+            })
+            .WithName("CheckoutBasket")
+            .Produces<CheckoutBasketResponce>(StatusCodes.Status201Created)
+            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .WithSummary("Checkout Basket")
+            .WithDescription("Checkout Basket")
+            .RequireAuthorization();
+        }
+    }
+}

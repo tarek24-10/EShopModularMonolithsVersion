@@ -1,6 +1,6 @@
 ﻿namespace Basket.Data.Repository
 {
-    internal class BasketRepository(BasketDbContext dbContext) : IBasketRepository
+    public class BasketRepository(BasketDbContext dbContext) : IBasketRepository
     {
         public async Task<ShoppingCart> GetBasket(string userName, bool asNoTracking = false, CancellationToken cancellationToken = default)
         {
