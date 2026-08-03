@@ -16,7 +16,8 @@
             .Produces<CreateBasketResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithDescription("Create Basket")
-            .WithSummary("Create Basket");
+            .WithSummary("Create Basket")
+            .RequireAuthorization();
         }
     }
 }

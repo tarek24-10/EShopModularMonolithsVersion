@@ -8,7 +8,7 @@ namespace Basket.Data.Configurations
         {
             builder.HasKey(e => e.Id);
 
-            builder.HasIndex(e => e.Id).IsUnique();
+            builder.HasIndex(e => e.UserName).IsUnique();
 
             builder.Property(e => e.UserName).IsRequired().HasMaxLength(100);
 

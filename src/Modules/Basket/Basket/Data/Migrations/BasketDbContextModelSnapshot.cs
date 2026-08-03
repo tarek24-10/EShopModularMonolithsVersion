@@ -48,7 +48,7 @@ namespace Basket.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
+                    b.HasIndex("UserName")
                         .IsUnique();
 
                     b.ToTable("ShoppingCarts", "basket");
