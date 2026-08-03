@@ -1,20 +1,48 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Builder;
+using Ordering.Data;
+using Shared.Data;
+using Shared.Data.Interceptors;
 
-namespace Ordering
+namespace Ordering;
+
+public static class OrderingModule
 {
-    public static class OrderingModule
+    public static IServiceCollection AddOrderingModule(this IServiceCollection services,
+        IConfiguration configuration)
     {
-        public static IServiceCollection AddOrderingModule(this IServiceCollection service,
-            IConfiguration configuration)
-        {
-            return service;
-        }
+        // Add services to the container.
+        // 1. Api Endpoint services
 
-        public static IApplicationBuilder UseOrderingModule(this IApplicationBuilder app)
+        // 2. Application Use Case services        
+
+        // 3. Data - Infrastructure services
+
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
+        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
+
+        services.AddDbContext<OrderingDbContext>((sp, options) =>
         {
-            return app;
-        }
+            options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
+            options.UseNpgsql(configuration.GetConnectionString("Database"));
+        });
+
+        return services;
+    }
+
+    public static IApplicationBuilder UseOrderingModule(this IApplicationBuilder app)
+    {
+        // Configure the HTTP request pipeline.
+        // 1. Use Api Endpoint services
+
+        // 2. Use Application Use Case services
+
+        // 3. Use Data - Infrastructure services
+        app.UseMigration<OrderingDbContext>();
+
+        return app;
     }
 }
