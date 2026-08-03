@@ -22,16 +22,11 @@ builder.Host.UseSerilog((context, services, config) =>
 
 var catalogAssembly = typeof(CatalogModule).Assembly;
 var basketAssembly = typeof(BasketModule).Assembly;
+var orderingAssembly = typeof(OrderingModule).Assembly;
 
-builder.Services.AddCarterWithAssemblies(catalogAssembly,
-    //typeof(OrderingModule).Assembly//,
-    basketAssembly
-    );
+builder.Services.AddCarterWithAssemblies(catalogAssembly, basketAssembly, orderingAssembly);
 
-builder.Services.AddMediatorWithAssemblies(catalogAssembly,
-    //typeof(OrderingModule).Assembly,
-    basketAssembly
-    );
+builder.Services.AddMediatorWithAssemblies(catalogAssembly, basketAssembly, orderingAssembly);
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {

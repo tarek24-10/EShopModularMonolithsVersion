@@ -1,9 +1,4 @@
-﻿using Mapster;
-using Microsoft.EntityFrameworkCore;
-using Ordering.Data;
-using Ordering.Orders.DTOs;
-using Shared.Contracts.CQRS;
-using Shared.Pagination;
+﻿using Shared.Pagination;
 
 namespace Ordering.Orders.Features.GetOrders;
 

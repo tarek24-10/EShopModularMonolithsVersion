@@ -1,8 +1,4 @@
-﻿using FluentValidation;
-using Ordering.Data;
-using Shared.Contracts.CQRS;
-
-namespace Ordering.Orders.Features.DeleteOrder;
+﻿namespace Ordering.Orders.Features.DeleteOrder;
 
 public record DeleteOrderCommand(Guid OrderId)
     : ICommand<DeleteOrderResult>;

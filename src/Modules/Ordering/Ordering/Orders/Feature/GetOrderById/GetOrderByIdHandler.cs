@@ -1,10 +1,4 @@
-﻿using Mapster;
-using Microsoft.EntityFrameworkCore;
-using Ordering.Data;
-using Ordering.Orders.DTOs;
-using Shared.Contracts.CQRS;
-
-namespace Ordering.Orders.Features.GetOrderById;
+﻿namespace Ordering.Orders.Features.GetOrderById;
 
 public record GetOrderByIdQuery(Guid Id)
     : IQuery<GetOrderByIdResult>;
