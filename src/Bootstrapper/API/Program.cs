@@ -42,6 +42,9 @@ builder.Services.AddMassTransitWithAssemblies(builder.Configuration,catalogAssem
     //typeof(OrderingModule).Assembly,
     basketAssembly);
 
+builder.Services.AddKeycloakWebApiAuthentication(builder.Configuration);
+builder.Services.AddAuthorization();
+
 //** Module sevices
 
 builder.Services.AddCatalogModule(builder.Configuration)
@@ -57,6 +60,9 @@ app.MapCarter();
 app.UseSerilogRequestLogging();
 
 app.UseExceptionHandler(options => { });
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 
 app.UseCatalogModule()
