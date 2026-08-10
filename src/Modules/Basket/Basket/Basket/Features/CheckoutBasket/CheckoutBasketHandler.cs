@@ -14,7 +14,7 @@ namespace Basket.Basket.Features.CheckoutBasket
             RuleFor(x => x.BasketCheckout.UserName).NotEmpty().WithMessage("User name is required.");
         }
     }
-    public class CheckoutBasketHandler(BasketRepository repository, IBus bus)
+    public class CheckoutBasketHandler(IBasketRepository repository, IBus bus)
         : ICommandHandler<CheckoutBasketCommand, CheckoutBasketResult>
     {
         public async Task<CheckoutBasketResult> Handle(CheckoutBasketCommand command, CancellationToken cancellationToken)

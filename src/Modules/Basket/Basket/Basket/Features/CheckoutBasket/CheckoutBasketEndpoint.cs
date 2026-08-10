@@ -12,7 +12,7 @@
                 
                 var result = await sender.Send(command);
 
-                var responce = result.adapt<CheckoutBasketResponce>();
+                var responce = result.Adapt<CheckoutBasketResponce>();
 
                 return Results.Ok(responce);
             })
