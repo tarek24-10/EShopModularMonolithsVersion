@@ -12,14 +12,14 @@ namespace Basket.Data.Processors
     {
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (stoppingToken.IsCancellationRequested)
+            while (!stoppingToken.IsCancellationRequested)
             {
                 try
                 { 
                 using var scope = serviceProvider.CreateScope();
                 var dbContext = scope.ServiceProvider.GetRequiredService<BasketDbContext>();
                 var outboxMessages = await dbContext.OutboxMessages
-                    .Where(m => m.ProcessedOn == null)
+                    .Where(m => m.ProcessedOn == default)
                     .ToListAsync(stoppingToken);
 
                     foreach (var message in outboxMessages)
@@ -52,9 +52,8 @@ namespace Basket.Data.Processors
                     {
                         logger.LogError(ex, "Error processing outbox messages");
                     }
-                }
-
                 await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
             }
         }
     }
+}
