@@ -24,7 +24,7 @@ namespace Shared.Data
         private static async Task SeedDatabaseAsync(IServiceProvider serviceProvider)
         {
             using var scope = serviceProvider.CreateScope();
-            var seeders = scope.ServiceProvider.GetServices<IDataSeeder>();
+            var seeders = scope.ServiceProvider.GetServices<IDataSeeder>(); // Get Services (s)
             foreach (var seeder in seeders)
             {
                 await seeder.SeedAllAsync();
